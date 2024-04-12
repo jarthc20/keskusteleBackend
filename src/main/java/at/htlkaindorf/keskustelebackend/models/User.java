@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID, generator = "user_id_seq")
-    @SequenceGenerator(name = "user_seq")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private String id;
 
