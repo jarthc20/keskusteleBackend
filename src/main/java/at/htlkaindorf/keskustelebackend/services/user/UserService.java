@@ -1,9 +1,8 @@
-package at.htlkaindorf.keskustelebackend.services;
+package at.htlkaindorf.keskustelebackend.services.user;
 
+import at.htlkaindorf.keskustelebackend.exceptions.EntityNotFoundException;
 import at.htlkaindorf.keskustelebackend.exceptions.MissingAttributeException;
-import at.htlkaindorf.keskustelebackend.exceptions.UniqueKeyViolationException;
 import at.htlkaindorf.keskustelebackend.models.User;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,14 +13,13 @@ import java.util.Optional;
 /**
  * Project: keskusteleBackend
  * Created by: Thomas Jaritz
- * Date: 10/04/2024
- * Time: 09:10
+ * Date: 12/04/2024
+ * Time: 08:10
  **/
 public interface UserService {
-    User save(User o) ;
+    User save(User o) throws MissingAttributeException;
 
-
-    User createNew(User o);
+    User createNew(User o) throws MissingAttributeException, EntityNotFoundException;
 
     List<User> saveAll(List<User> list);
 
@@ -34,11 +32,4 @@ public interface UserService {
 
     Optional<User> getById(Long id);
 
-    Optional<User> update(Long id, User o);
-
-    void delete(User o);
-
-    void deleteAll();
-
-    void deleteById(Long id);
 }
