@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Project: keskusteleBackend
+ * Created by: Thomas Jaritz
+ * Date: 14/04/2024
+ * Time: 16:15
+ **/
+
 @RestController
 @RequestMapping("message")
 @RequiredArgsConstructor
