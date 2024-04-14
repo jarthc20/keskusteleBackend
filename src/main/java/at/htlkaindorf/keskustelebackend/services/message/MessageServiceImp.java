@@ -58,6 +58,11 @@ public class MessageServiceImp implements MessageService {
     }
 
     @Override
+    public List<Message> getAllByChatroomName(String cr_name) {
+        return messageRepo.findAllByChatroom_Name(cr_name);
+    }
+
+    @Override
     public Optional<List<Message>> getAll() {
         return Optional.of(messageRepo.findAll());
     }

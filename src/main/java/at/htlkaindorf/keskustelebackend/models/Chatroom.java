@@ -24,6 +24,9 @@ public class Chatroom {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(
+            unique = true
+    )
     private String name;
     private String pic_path;
     @ManyToOne(

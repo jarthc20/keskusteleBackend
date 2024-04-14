@@ -24,11 +24,11 @@ public interface MessageService {
     List<Message> saveAll(List<Message> list);
 
     Optional<List<Message>> getAll();
+    List<Message> getAllByChatroomName(String cr_name);
 
     Page<Message> getAll(Pageable pageable);
 
     Optional<List<Message>> getAll(Sort sort);
-
 
     Optional<Message> getById(Long id);
 
