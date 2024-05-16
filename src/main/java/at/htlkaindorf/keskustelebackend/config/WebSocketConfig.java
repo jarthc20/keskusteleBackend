@@ -10,7 +10,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  * Project: keskusteleBackend
  * Created by: Thomas Jaritz
  * Date: 14/04/2024
- * Time: 16:08
+ * Time: 09:13
  **/
 
 @Configuration
@@ -19,17 +19,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(final MessageBrokerRegistry config) {
-        //scoreboard
         config.enableSimpleBroker("/chatroom");
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
-        //data
         registry.addEndpoint("/messages").setAllowedOriginPatterns("*");
         registry.addEndpoint("/messages").setAllowedOriginPatterns("*").withSockJS();
-        registry.addEndpoint("/error").setAllowedOriginPatterns("*");
-        registry.addEndpoint("/error").setAllowedOriginPatterns("*").withSockJS();
     }
 }
