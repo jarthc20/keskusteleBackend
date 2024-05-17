@@ -17,9 +17,9 @@ import java.util.Optional;
  * Time: 08:10
  **/
 public interface UserService {
-    User save(User o) throws MissingAttributeException;
+    User save(User o) throws Exception;
 
-    User createNew(User o) throws MissingAttributeException, EntityNotFoundException;
+    User createNew(User o) throws Exception;
 
     List<User> saveAll(List<User> list);
 
@@ -30,6 +30,6 @@ public interface UserService {
     Optional<List<User>> getAll(Sort sort);
 
 
-    Optional<User> getById(Long id);
+    Optional<User> getById(String id);
 
 }
