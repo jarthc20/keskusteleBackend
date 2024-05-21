@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 public class UserServiceImp implements UserService{
     private final UserRepo userRepo;
 
+
+    //CONFIRM USER
+
     public boolean isValid (User user) throws Exception {
         String emailRegex = "([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)";
         String passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$";

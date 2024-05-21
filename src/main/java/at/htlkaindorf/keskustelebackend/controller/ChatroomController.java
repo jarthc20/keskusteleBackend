@@ -6,6 +6,7 @@ import at.htlkaindorf.keskustelebackend.models.Chatroom;
 import at.htlkaindorf.keskustelebackend.services.Chatroom.ChatroomService;
 import at.htlkaindorf.keskustelebackend.services.Chatroom.ChatroomServiceImp;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/chatroom")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@Slf4j
 public class ChatroomController {
     private final ChatroomServiceImp chatroomServiceImp;
     @GetMapping("/all")
@@ -29,7 +31,9 @@ public class ChatroomController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity postChatroom(@RequestBody Chatroom chatroom) throws EntityNotFoundException, MissingAttributeException {return ResponseEntity.ok(chatroomServiceImp.createNew(chatroom));
+    public ResponseEntity postChatroom(@RequestBody Chatroom chatroom) throws EntityNotFoundException, MissingAttributeException
+    {
+        return ResponseEntity.ok(chatroomServiceImp.createNew(chatroom));
     }
 
 

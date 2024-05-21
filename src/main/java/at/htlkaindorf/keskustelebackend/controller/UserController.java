@@ -5,6 +5,7 @@ import at.htlkaindorf.keskustelebackend.models.User;
 import at.htlkaindorf.keskustelebackend.services.user.UserService;
 import at.htlkaindorf.keskustelebackend.services.user.UserServiceImp;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserServiceImp userServiceImp;
 
@@ -30,6 +32,7 @@ public class UserController {
 
     @PostMapping("/post")
     public ResponseEntity createNewUser(@RequestBody User user) throws Exception {
+        log.info("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt");
         return ResponseEntity.ok(userServiceImp.createNew(user));
     }
 
