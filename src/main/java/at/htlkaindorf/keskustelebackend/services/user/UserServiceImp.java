@@ -76,8 +76,18 @@ public class UserServiceImp implements UserService{
         return Optional.of(userRepo.findAll(sort));
     }
 
+
     @Override
     public Optional<User> getById(String id) {
         return userRepo.findById(id);
+    }
+
+    @Override
+    public Optional<User> longin(User user) {
+        Optional<User> userByEmail = userRepo.findUserByEmail(user.getEmail());
+        if (userByEmail.isEmpty()) return Optional.empty();
+        if (user.getPassword().equals(userByEmail.get().getPassword())) return Optional.empty();
+
+        return userByEmail;
     }
 }

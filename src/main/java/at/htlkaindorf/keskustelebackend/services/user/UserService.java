@@ -29,7 +29,8 @@ public interface UserService {
 
     Optional<List<User>> getAll(Sort sort);
 
-
     Optional<User> getById(String id);
+
+    Optional<User> longin(User user);
 
 }

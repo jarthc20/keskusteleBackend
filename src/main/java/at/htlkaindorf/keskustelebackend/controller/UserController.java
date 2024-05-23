@@ -32,5 +32,9 @@ public class UserController {
     }
 
     //@PatchMapping("/")
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody User user) throws Exception {
+        return ResponseEntity.of(userService.longin(user));
+    }
 
 }
