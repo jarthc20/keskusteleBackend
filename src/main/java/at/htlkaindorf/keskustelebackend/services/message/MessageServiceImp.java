@@ -2,8 +2,10 @@ package at.htlkaindorf.keskustelebackend.services.message;
 
 import at.htlkaindorf.keskustelebackend.exceptions.EntityNotFoundException;
 import at.htlkaindorf.keskustelebackend.exceptions.MissingAttributeException;
+import at.htlkaindorf.keskustelebackend.models.Chatroom;
 import at.htlkaindorf.keskustelebackend.models.Message;
 import at.htlkaindorf.keskustelebackend.models.User;
+import at.htlkaindorf.keskustelebackend.repos.ChatroomRepo;
 import at.htlkaindorf.keskustelebackend.repos.MessageRepo;
 import at.htlkaindorf.keskustelebackend.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ import java.util.Optional;
 public class MessageServiceImp implements MessageService {
     private final MessageRepo messageRepo;
     private final UserRepo userRepo;
+    private final ChatroomRepo chatroomRepo;
 
     @Override
     public Message save(Message message) throws MissingAttributeException {
@@ -40,12 +43,14 @@ public class MessageServiceImp implements MessageService {
     @Override
     public Message createNew(Message message) throws MissingAttributeException, EntityNotFoundException {
         if (message.getChatroom() == null || message.getChatroom().getId() == null) throw new MissingAttributeException();
-        Optional<Message> messageById = messageRepo.findById(message.getChatroom().getId());
-        if (messageById.isEmpty()) throw new EntityNotFoundException();
+        Optional<Chatroom> chatroom = chatroomRepo.findById(message.getChatroom().getId());
+        if (chatroom.isEmpty()) throw new EntityNotFoundException();
+        message.setChatroom(chatroom.get());
 
         if (message.getAuthor() == null || message.getAuthor().getId() == null) throw new MissingAttributeException();
         Optional<User> authorById = userRepo.findById(message.getAuthor().getId());
         if (authorById.isEmpty()) throw new EntityNotFoundException();
+        message.setAuthor(authorById.get());
 
         if (message.getContent() == null || message.getContent().trim().equalsIgnoreCase("")) throw new MissingAttributeException();
 

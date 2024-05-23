@@ -39,9 +39,9 @@ public class ChatroomServiceImp implements ChatroomService {
         if (chatroom.getCreator() == null || chatroom.getCreator().getId() == null) throw new MissingAttributeException();
         Optional<User> creatorById = userRepo.findById(chatroom.getCreator().getId());
         if (creatorById.isEmpty()) throw new EntityNotFoundException();
+        chatroom.setCreator(creatorById.get());
 
         if (chatroom.getName() == null || chatroom.getName().trim().equalsIgnoreCase("")) throw new MissingAttributeException();
-
         if (chatroom.getMessages() == null) chatroom.setMessages(new ArrayList<>());
 
         return chatroomRepo.save(chatroom);

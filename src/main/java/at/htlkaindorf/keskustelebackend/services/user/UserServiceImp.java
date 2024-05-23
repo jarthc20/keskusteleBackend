@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -26,35 +27,19 @@ public class UserServiceImp implements UserService{
         String emailRegex = "([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)";
         String passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$";
         boolean isValid = true;
-        if(!patternMatches(user.getEmail(), emailRegex)) {
-            isValid = false;
-        }
 
-        //Minimum eight characters, at least one upper case English letter,
-        // one lower case English letter, one number and one
-        // special character
-        if (!patternMatches(user.getPassword(), passwordRegex))
-        {
-            isValid = false;
-        }
+        if (!user.getPassword().matches(passwordRegex) || !user.getEmail().matches(emailRegex)) isValid = false;
 
         return isValid;
-    }
-
-    public static boolean patternMatches(String emailAddress, String regexPattern)
-    {
-        return Pattern.compile(regexPattern)
-                .matcher(emailAddress)
-                .matches();
     }
 
 
 
     @Override
     public User save(User user) throws Exception {
-        if (user.getUsername() == null | user.getUsername().trim().equalsIgnoreCase("")
-                | user.getEmail() == null | user.getEmail().trim().equalsIgnoreCase("")
-                | user.getPassword() == null |user.getPassword().trim().equalsIgnoreCase(""))
+        if (user.getUsername() == null || user.getUsername().trim().equalsIgnoreCase("")
+                || user.getEmail() == null || user.getEmail().trim().equalsIgnoreCase("")
+                || user.getPassword() == null || user.getPassword().trim().equalsIgnoreCase(""))
             throw new MissingAttributeException();
 
         if(!isValid(user))
@@ -64,14 +49,9 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public User createNew(User user) throws Exception {
-        if (user.getUsername() == null | user.getUsername().trim().equalsIgnoreCase("")
-                | user.getEmail() == null | user.getEmail().trim().equalsIgnoreCase("")
-                | user.getPassword() == null |user.getPassword().trim().equalsIgnoreCase(""))
-            throw new MissingAttributeException();
-
-        if(!user.getId().isBlank())
-            throw new Exception("Id of user has to be undefined/null");
+    public User createNew(User user) {
+        if (user.getMessages() == null) user.setMessages(new ArrayList<>());
+        user.setId(null);
 
         return userRepo.save(user);
     }

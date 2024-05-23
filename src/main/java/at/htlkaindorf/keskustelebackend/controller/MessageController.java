@@ -34,14 +34,17 @@ public class MessageController {
         return ResponseEntity.ok(chatroom == null ? messageService.getAll(Sort.by("time")).get() : messageService.getAllByChatroomName(chatroom));
     }
 
-    @MessageMapping("/messages/{cr_name}")
-    public void sendMessage(@DestinationVariable String cr_name,
-                            Message message) {
+    @PostMapping("/post/{cr_name}")
+    public ResponseEntity<Message> sendMessage(@PathVariable String cr_name,
+                            @RequestBody Message message) {
         try {
             Message aNew = messageService.createNew(message);
             simpMessagingTemplate.convertAndSend("/chatroom/" + cr_name + "/messages", aNew);
+            return ResponseEntity.ok(aNew);
         } catch (MissingAttributeException | EntityNotFoundException e) {
             simpMessagingTemplate.convertAndSend("/chatroom/" + cr_name + "/error", e.getMessage());
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 

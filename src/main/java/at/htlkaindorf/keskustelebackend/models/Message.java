@@ -7,15 +7,18 @@ package at.htlkaindorf.keskustelebackend.models;
  * Time: 8:12
  **/
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Table(name = "message")
 public class Message {
     @Id
@@ -44,5 +47,6 @@ public class Message {
     @JoinColumn(
             foreignKey = @ForeignKey(name = "msg_cr_fk")
     )
+    @ToString.Exclude
     private Chatroom chatroom;
 }
