@@ -1,8 +1,8 @@
 package at.htlkaindorf.keskustelebackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +17,10 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "user")
 public class User {
     @Id
@@ -43,6 +46,8 @@ public class User {
             cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.PERSIST},
             fetch = FetchType.EAGER
     )
+    @JsonIgnore
+    @ToString.Exclude
     private List<Message> messages;
 
     public boolean addMessage(Message message) {
@@ -55,4 +60,5 @@ public class User {
         if (message == null) return false;
         return messages.remove(message);
     }
+
 }
