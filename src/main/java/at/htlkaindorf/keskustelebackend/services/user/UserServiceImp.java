@@ -45,6 +45,8 @@ public class UserServiceImp implements UserService{
         if(!isValid(user))
             throw new Exception("User is invalid");
 
+        user.setEmail(user.getEmail().toLowerCase());
+
         return userRepo.save(user);
     }
 
@@ -52,6 +54,7 @@ public class UserServiceImp implements UserService{
     public User createNew(User user) {
         if (user.getMessages() == null) user.setMessages(new ArrayList<>());
         user.setId(null);
+        user.setEmail(user.getEmail().toLowerCase());
 
         return userRepo.save(user);
     }
@@ -84,7 +87,7 @@ public class UserServiceImp implements UserService{
 
     @Override
     public Optional<User> longin(User user) {
-        Optional<User> userByEmail = userRepo.findUserByEmail(user.getEmail());
+        Optional<User> userByEmail = userRepo.findUserByEmail(user.getEmail().toLowerCase());
         if (userByEmail.isEmpty()) return Optional.empty();
         if (user.getPassword().equals(userByEmail.get().getPassword())) return Optional.empty();
 

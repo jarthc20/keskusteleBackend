@@ -1,0 +1,25 @@
+package at.htlkaindorf.keskustelebackend.models.user;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * Project: keskusteleBackend
+ * Created by: Thomas Jaritz
+ * Date: 07/06/2024
+ * Time: 08:48
+ **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RegisterUserDto {
+    private String password;
+    private String username;
+
+    private String email;
+
+
+}
