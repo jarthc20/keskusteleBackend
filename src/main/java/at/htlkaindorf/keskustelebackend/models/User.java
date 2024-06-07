@@ -81,6 +81,11 @@ public class User implements UserDetails {
         return List.of();
     }
 
+    @JsonIgnore
+    public String getRealUsername() {
+        return this.username;
+    }
+
     @Override
     public String getUsername() {
         return this.email;
