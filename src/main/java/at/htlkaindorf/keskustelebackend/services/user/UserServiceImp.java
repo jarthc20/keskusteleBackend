@@ -2,6 +2,7 @@ package at.htlkaindorf.keskustelebackend.services.user;
 
 import at.htlkaindorf.keskustelebackend.exceptions.EntityNotFoundException;
 import at.htlkaindorf.keskustelebackend.exceptions.MissingAttributeException;
+import at.htlkaindorf.keskustelebackend.exceptions.UniqueKeyViolationException;
 import at.htlkaindorf.keskustelebackend.models.User;
 import at.htlkaindorf.keskustelebackend.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +58,28 @@ public class UserServiceImp implements UserService{
         user.setId(null);
 
         return userRepo.save(user);
+    }
+
+    @Override
+    public Optional<User> updateUser(String id, User user) throws Exception {
+        Optional<User> userOptional = getById(id);
+        if (userOptional.isEmpty()) return Optional.empty();
+        User userToUpdate = userOptional.get();
+        user.setId(null);
+
+        Field[] fields = User.class.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            Object value = ReflectionUtils.getField(field, user);
+            if (value != null && !(value instanceof ArrayList<?>)) {
+                ReflectionUtils.setField(field, userToUpdate, value);
+            }
+        }
+
+        //reload scoreboards
+        User save = save(userToUpdate);
+
+        return Optional.of(save);
     }
 
     @Override

@@ -31,10 +31,11 @@ public class UserController {
         return ResponseEntity.ok(userService.createNew(user));
     }
 
-    //@PatchMapping("/")
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user) throws Exception {
-        return ResponseEntity.of(userService.longin(user));
+    @PatchMapping("/update/{id}")
+    public ResponseEntity updateUser(@RequestBody User newUser,
+                                     @PathVariable String id) throws Exception {
+
+        return ResponseEntity.of(userService.updateUser(id,newUser));
     }
 
 }

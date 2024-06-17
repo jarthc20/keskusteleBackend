@@ -30,6 +30,7 @@ public interface UserService {
     Optional<List<User>> getAll(Sort sort);
 
     Optional<User> getById(String id);
+    Optional<User> updateUser(String id, User user) throws Exception;
 
     Optional<User> longin(User user);
 
