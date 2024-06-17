@@ -77,9 +77,8 @@ public class UserServiceImp implements UserService{
         }
 
         //reload scoreboards
-        User save = save(userToUpdate);
 
-        return Optional.of(save);
+        return Optional.of(userRepo.save(user));
     }
 
     @Override
