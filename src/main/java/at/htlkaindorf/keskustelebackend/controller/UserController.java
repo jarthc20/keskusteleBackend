@@ -26,10 +26,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getAll().get());
     }
 
-    @PostMapping("/post")
+    /*@PostMapping("/post")
     public ResponseEntity createNewUser(@RequestBody User user) throws Exception {
         return ResponseEntity.ok(userService.createNew(user));
-    }
+    }*/
 
     @PatchMapping("/update/{id}")
     public ResponseEntity updateUser(@RequestBody User newUser,

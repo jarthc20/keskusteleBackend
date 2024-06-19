@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService{
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
 
     //CONFIRM USER
@@ -67,6 +69,10 @@ public class UserServiceImp implements UserService{
         User userToUpdate = userOptional.get();
         user.setId(null);
 
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         Field[] fields = User.class.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
@@ -76,9 +82,7 @@ public class UserServiceImp implements UserService{
             }
         }
 
-        //reload scoreboards
-
-        return Optional.of(userRepo.save(user));
+        return Optional.of(userRepo.save(userToUpdate));
     }
 
     @Override
